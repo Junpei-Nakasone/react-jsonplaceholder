@@ -1,12 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { ReactElement } from 'react';
 import './App.css';
-import UsersPage from './pages/todos';
+import TodosPage from './pages/todos';
+import UsersPage from './pages/users';
+import { Route, Routes } from 'react-router-dom';
 
-function App() {
+
+const App = (): ReactElement => {
   return (
     <div className="App">
-      <UsersPage />
+      <Routes>
+        <Route path='/' element={<UsersPage />} />
+        <Route path='/example' element={<TodosPage />} />
+      </Routes>
     </div>
   );
 }
