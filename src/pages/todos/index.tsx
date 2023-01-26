@@ -1,25 +1,50 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import FetchTodos from "../../components/todos";
 import { TodosResponse } from "../../types/todos";
+import TodoItemList from "./todoItemList";
+
+interface State {
+    userId: number;
+    userName: string;
+};
 
 const TodosPage = () => {
-    const [todo, setTodo] = useState<TodosResponse>();
+    const location = useLocation();
+    console.log('location', location)
+    const { userId, userName } = location.state as State;
+    const [todos, setTodos] = useState<TodosResponse[]>();
 
     useEffect(() => {
         (async () => {
-            let todoData = await FetchTodos();
+            let todoData = await FetchTodos(userId);
 
-            setTodo(todoData)
+            setTodos(todoData)
         })()
     }, [])
-
+    console.log(todos)
 
     return (
         <>
-        <div>TodosPage</div>
-          <h3>Todo ID: {todo?.id}</ h3>
-          <h3>User ID: {todo?.userId}</ h3>
-          <h3>{todo?.title}</ h3>
+        {
+            todos ? (
+                <>
+                <span><Link to={'/'}>back to All users</Link></span>
+                <h2>{userName}'s All todos</h2>
+                <ul>
+                    {todos.map((todo, index) => { return (
+                        <TodoItemList
+                        title={todo.title} completed={todo.completed}
+                            />
+                    )
+                    }
+                    )}
+                </ul>
+                </>
+            ) : (
+                <>Loading...</>
+            )
+        }
         </>
     )
 }

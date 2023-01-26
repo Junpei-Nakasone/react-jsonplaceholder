@@ -1,10 +1,10 @@
 import { TodosResponse } from "../../types/todos";
 
-const FetchTodos = async (): Promise<TodosResponse> => {
-    const apiUrl = 'https://jsonplaceholder.typicode.com/todos/1';
+const FetchTodos = async (userId: number): Promise<TodosResponse[]> => {
+    const apiUrl = 'https://jsonplaceholder.typicode.com/todos/?userId=' + String(userId);
 
 
-    const res: TodosResponse = await fetch(apiUrl)
+    const res: TodosResponse[] = await fetch(apiUrl)
     .then(resp => resp.json());
 
     return (

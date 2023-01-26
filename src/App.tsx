@@ -10,7 +10,7 @@ const App = (): ReactElement => {
     <div className="App">
       <Routes>
         <Route path='/' element={<UsersPage />} />
-        <Route path='/example' element={<TodosPage />} />
+        <Route path='/users-todo' element={<TodosPage />} />
       </Routes>
     </div>
   );
